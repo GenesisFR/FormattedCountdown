@@ -1,3 +1,5 @@
+-- FormattedCountdown v1.0
+
 obs           = obslua
 source_name   = ""
 total_seconds = 0
@@ -106,8 +108,8 @@ end
 
 ----------------------------------------------------------
 
--- A function named script_properties defines the properties that the user
--- can change for the entire script module itself
+-- A function named script_properties defines the properties that the user can change for
+-- the entire script module itself
 function script_properties()
 	local props = obs.obs_properties_create()
 	obs.obs_properties_add_int(props, "duration", "Duration (seconds)", 1, 3600000, 1)
@@ -132,12 +134,12 @@ function script_properties()
 	return props
 end
 
--- A function named script_description returns the description shown to
--- the user
+-- A function named script_description returns the description shown to the user
 function script_description()
 	return "Sets a text source to act as a countdown timer when the source is active.\n\n" ..
          "Output Format: $h = hours, $m = minutes, $s = seconds\n\n" ..
-				 "Originally made by Jim - Improved by Genesis"
+				 "-----\n\n" ..
+				 "Originally made by Jim - improved by Genesis (v1.0)"
 end
 
 -- A function named script_update will be called when settings are changed
@@ -161,9 +163,8 @@ end
 
 -- A function named script_save will be called when the script is saved
 --
--- NOTE: This function is usually used for saving extra data (such as in this
--- case, a hotkey's save data).  Settings set via the properties are saved
--- automatically.
+-- NOTE: This function is usually used for saving extra data (such as in this case, a
+-- hotkey's save data).  Settings set via the properties are saved automatically.
 function script_save(settings)
 	local hotkey_save_array = obs.obs_hotkey_save(hotkey_id)
 	obs.obs_data_set_array(settings, "reset_hotkey", hotkey_save_array)
@@ -174,11 +175,10 @@ end
 function script_load(settings)
 	-- Connect hotkey and activation/deactivation signal callbacks
 	--
-	-- NOTE: These particular script callbacks do not necessarily have to
-	-- be disconnected, as callbacks will automatically destroy themselves
-	-- if the script is unloaded.  So there's no real need to manually
-	-- disconnect callbacks that are intended to last until the script is
-	-- unloaded.
+	-- NOTE: These particular script callbacks do not necessarily have to be disconnected, as
+  -- callbacks will automatically destroy themselves if the script is unloaded. So there's
+	-- no real need to manually disconnect callbacks that are intended to last until the
+	-- script is unloaded.
 	local sh = obs.obs_get_signal_handler()
 	obs.signal_handler_connect(sh, "source_activate", source_activated)
 	obs.signal_handler_connect(sh, "source_deactivate", source_deactivated)
